@@ -1,6 +1,0 @@
-{
-  "parent": "enderrift:block/interface",
-  "textures": {
-    "face": "enderrift:block/crafting_browser"
-  }
-}

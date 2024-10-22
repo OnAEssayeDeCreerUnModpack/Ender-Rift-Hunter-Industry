@@ -1,8 +1,0 @@
-{
-  "parent": "block/block",
-  "loader": "forge:obj",
-  "model": "enderrift:models/block/generator.obj",
-  "textures": {
-    "particle": "enderrift:block/structure_base"
-  }
-}
