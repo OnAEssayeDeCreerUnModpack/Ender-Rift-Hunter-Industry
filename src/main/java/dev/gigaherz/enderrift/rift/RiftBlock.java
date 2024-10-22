@@ -62,7 +62,7 @@ public class RiftBlock extends BaseEntityBlock
     {
         if (state.getBlock() != this)
             return super.getLightEmission(state, world, pos);
-        return state.getValue(ASSEMBLED) ? 15 : 0;
+        return state.getValue(ASSEMBLED) ? 15 : super.getLightEmission(state, world, pos);
     }
 
     @Deprecated
@@ -71,7 +71,7 @@ public class RiftBlock extends BaseEntityBlock
     {
         if (state.getBlock() != this)
             return super.getLightBlock(state, worldIn, pos);
-        return state.getValue(ASSEMBLED) ? 1 : 15;
+        return state.getValue(ASSEMBLED) ? 1 : super.getLightBlock(state, worldIn, pos);
     }
 
     @org.jetbrains.annotations.Nullable
