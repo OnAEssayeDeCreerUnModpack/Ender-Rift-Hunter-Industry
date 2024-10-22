@@ -1,7 +1,7 @@
 {
   "parent": "block/block",
   "textures": {
-    "all": "minecraft:block/redstone_block",
+    "all": "minecraft:block/amethyst_block",
     "particle": "#all"
   },
   "elements": [

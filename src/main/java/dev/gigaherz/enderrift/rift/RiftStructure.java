@@ -26,19 +26,19 @@ public class RiftStructure
     {
         StructurePattern = new Block[]{
                 // Bottom
-                Blocks.IRON_BLOCK, Blocks.REDSTONE_BLOCK, Blocks.IRON_BLOCK,
-                Blocks.REDSTONE_BLOCK, null, Blocks.REDSTONE_BLOCK,
-                Blocks.IRON_BLOCK, Blocks.REDSTONE_BLOCK, Blocks.IRON_BLOCK,
+                Blocks.NETHERITE_BLOCK, Blocks.AMETHYST_BLOCK, Blocks.NETHERITE_BLOCK,
+                Blocks.AMETHYST_BLOCK, null, Blocks.AMETHYST_BLOCK,
+                Blocks.NETHERITE_BLOCK, Blocks.AMETHYST_BLOCK, Blocks.NETHERITE_BLOCK,
 
                 // Middle
-                Blocks.REDSTONE_BLOCK, null, Blocks.REDSTONE_BLOCK,
+                Blocks.AMETHYST_BLOCK, null, Blocks.AMETHYST_BLOCK,
                 null, EnderRiftMod.RIFT.get(), null,
-                Blocks.REDSTONE_BLOCK, null, Blocks.REDSTONE_BLOCK,
+                Blocks.AMETHYST_BLOCK, null, Blocks.AMETHYST_BLOCK,
 
                 // Top
-                Blocks.IRON_BLOCK, Blocks.REDSTONE_BLOCK, Blocks.IRON_BLOCK,
-                Blocks.REDSTONE_BLOCK, null, Blocks.REDSTONE_BLOCK,
-                Blocks.IRON_BLOCK, Blocks.REDSTONE_BLOCK, Blocks.IRON_BLOCK,
+                Blocks.NETHERITE_BLOCK, Blocks.AMETHYST_BLOCK, Blocks.NETHERITE_BLOCK,
+                Blocks.AMETHYST_BLOCK, null, Blocks.AMETHYST_BLOCK,
+                Blocks.NETHERITE_BLOCK, Blocks.AMETHYST_BLOCK, Blocks.NETHERITE_BLOCK,
         };
 
         StructureStates = new BlockState[]{

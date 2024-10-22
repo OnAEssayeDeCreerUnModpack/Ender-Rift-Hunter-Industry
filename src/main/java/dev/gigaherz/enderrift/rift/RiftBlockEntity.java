@@ -31,8 +31,8 @@ import java.util.UUID;
 
 public class RiftBlockEntity extends BlockEntity implements IRiftChangeListener
 {
-    private static final int STARTUP_POWER = 10000;
-    public static final int BUFFER_POWER = 1000000;
+    private static final int STARTUP_POWER = 100000;
+    public static final int BUFFER_POWER = 10000000;
     private final Random rand = new Random();
 
     private EnergyBuffer energyBuffer = new EnergyBuffer(BUFFER_POWER);
@@ -265,7 +265,7 @@ public class RiftBlockEntity extends BlockEntity implements IRiftChangeListener
         IItemHandler handler = getInventory();
         if (handler == null)
             return 0;
-        return Mth.ceil(Math.pow(handler.getSlots(), 0.8));
+        return Mth.ceil(100.0*Math.pow(handler.getSlots(), 4) + 1500.0);
     }
 
     public boolean isPowered()
