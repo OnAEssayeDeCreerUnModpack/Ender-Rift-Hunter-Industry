@@ -11,10 +11,6 @@ import dev.gigaherz.enderrift.automation.iface.InterfaceContainer;
 import dev.gigaherz.enderrift.automation.iface.InterfaceScreen;
 import dev.gigaherz.enderrift.automation.proxy.ProxyBlock;
 import dev.gigaherz.enderrift.automation.proxy.ProxyBlockEntity;
-import dev.gigaherz.enderrift.generator.GeneratorBlock;
-import dev.gigaherz.enderrift.generator.GeneratorBlockEntity;
-import dev.gigaherz.enderrift.generator.GeneratorContainer;
-import dev.gigaherz.enderrift.generator.GeneratorScreen;
 import dev.gigaherz.enderrift.network.ClearCraftingGrid;
 import dev.gigaherz.enderrift.network.SendSlotChanges;
 import dev.gigaherz.enderrift.network.SetVisibleSlots;
@@ -109,7 +105,6 @@ public class EnderRiftMod
     public static final RegistryObject<Block> CRAFTING_BROWSER = BLOCKS.register("crafting_browser", () -> new BrowserBlock(true, BlockBehaviour.Properties.of().mapColor(MapColor.STONE).sound(SoundType.METAL).strength(3.0F, 8.0F)));
     public static final RegistryObject<Block> PROXY = BLOCKS.register("proxy", () -> new ProxyBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).sound(SoundType.METAL).strength(3.0F, 8.0F)));
     public static final RegistryObject<Block> DRIVER = BLOCKS.register("driver", () -> new DriverBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).sound(SoundType.METAL).strength(3.0F, 8.0F)));
-    public static final RegistryObject<Block> GENERATOR = BLOCKS.register("generator", () -> new GeneratorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).sound(SoundType.METAL).strength(3.0F, 8.0F)));
 
     public static final RegistryObject<Item> RIFT_ITEM = ITEMS.register("rift", () -> new BlockItem(RIFT.get(), new Item.Properties()));
     public static final RegistryObject<Item> STRUCTURE_CORNER_ITEM = ITEMS.register("structure_corner", () -> new BlockItem(STRUCTURE_CORNER.get(), new Item.Properties()));
@@ -119,7 +114,6 @@ public class EnderRiftMod
     public static final RegistryObject<Item> CRAFTING_BROWSER_ITEM = ITEMS.register("crafting_browser", () -> new BlockItem(CRAFTING_BROWSER.get(), new Item.Properties()));
     public static final RegistryObject<Item> PROXY_ITEM = ITEMS.register("proxy", () -> new BlockItem(PROXY.get(), new Item.Properties()));
     public static final RegistryObject<Item> DRIVER_ITEM = ITEMS.register("driver", () -> new BlockItem(DRIVER.get(), new Item.Properties()));
-    public static final RegistryObject<Item> GENERATOR_ITEM = ITEMS.register("generator", () -> new BlockItem(GENERATOR.get(), new Item.Properties()));
     public static final RegistryObject<Item> RIFT_ORB = ITEMS.register("rift_orb", () -> new RiftItem(new Item.Properties().stacksTo(16)));
 
     public static final RegistryObject<BlockEntityType<RiftBlockEntity>> RIFT_BLOCK_ENTITY = BLOCK_ENTITIES.register("rift", () -> BlockEntityType.Builder.of(RiftBlockEntity::new, RIFT.get()).build(null));
@@ -128,12 +122,10 @@ public class EnderRiftMod
     public static final RegistryObject<BlockEntityType<BrowserBlockEntity>> BROWSER_BLOCK_ENTITY = BLOCK_ENTITIES.register("browser", () -> BlockEntityType.Builder.of(BrowserBlockEntity::new, BROWSER.get(), CRAFTING_BROWSER.get()).build(null));
     public static final RegistryObject<BlockEntityType<ProxyBlockEntity>> PROXY_BLOCK_ENTITY = BLOCK_ENTITIES.register("proxy", () -> BlockEntityType.Builder.of(ProxyBlockEntity::new, PROXY.get()).build(null));
     public static final RegistryObject<BlockEntityType<DriverBlockEntity>> DRIVER_BLOCK_ENTITY = BLOCK_ENTITIES.register("driver", () -> BlockEntityType.Builder.of(DriverBlockEntity::new, DRIVER.get()).build(null));
-    public static final RegistryObject<BlockEntityType<GeneratorBlockEntity>> GENERATOR_BLOCK_ENTITY = BLOCK_ENTITIES.register("generator", () -> BlockEntityType.Builder.of(GeneratorBlockEntity::new, GENERATOR.get()).build(null));
 
     public static final RegistryObject<MenuType<BrowserContainer>> BROWSER_MENU = MENU_TYPES.register("browser", () -> new MenuType<>(BrowserContainer::new, FeatureFlags.DEFAULT_FLAGS));
     public static final RegistryObject<MenuType<CraftingBrowserContainer>> CRAFTING_BROWSER_MENU = MENU_TYPES.register("crafting_browser", () -> new MenuType<>(CraftingBrowserContainer::new, FeatureFlags.DEFAULT_FLAGS));
     public static final RegistryObject<MenuType<InterfaceContainer>> INTERFACE_MENU = MENU_TYPES.register("interface", () -> new MenuType<>(InterfaceContainer::new, FeatureFlags.DEFAULT_FLAGS));
-    public static final RegistryObject<MenuType<GeneratorContainer>> GENERATOR_MENU = MENU_TYPES.register("generator", () -> new MenuType<>(GeneratorContainer::new, FeatureFlags.DEFAULT_FLAGS));
 
     public static final RegistryObject<SimpleCraftingRecipeSerializer<OrbDuplicationRecipe>> ORB_DUPLICATION = RECIPE_SERIALIZERS.register("orb_duplication", () -> new SimpleCraftingRecipeSerializer<>(OrbDuplicationRecipe::new));
 
@@ -148,7 +140,6 @@ public class EnderRiftMod
                         output.accept(CRAFTING_BROWSER_ITEM.get());
                         output.accept(PROXY_ITEM.get());
                         output.accept(DRIVER_ITEM.get());
-                        output.accept(GENERATOR_ITEM.get());
                     }).build()
             );
 
@@ -198,7 +189,6 @@ public class EnderRiftMod
 
     public void clientSetup(FMLClientSetupEvent event)
     {
-        MenuScreens.register(GENERATOR_MENU.get(), GeneratorScreen::new);
         MenuScreens.register(INTERFACE_MENU.get(), InterfaceScreen::new);
         MenuScreens.register(BROWSER_MENU.get(), BrowserScreen::new);
         MenuScreens.register(CRAFTING_BROWSER_MENU.get(), CraftingBrowserScreen::new);
@@ -295,7 +285,6 @@ public class EnderRiftMod
                 @Override
                 protected void generate()
                 {
-                    this.dropSelf(GENERATOR.get());
                     this.dropSelf(DRIVER.get());
                     this.dropSelf(PROXY.get());
                     this.dropSelf(INTERFACE.get());
@@ -335,7 +324,6 @@ public class EnderRiftMod
                         .add(PROXY.get())
                         .add(DRIVER.get())
                         .add(RIFT.get())
-                        .add(GENERATOR.get())
                         .add(STRUCTURE_CORNER.get())
                         .add(STRUCTURE_EDGE.get());
             }
