@@ -1,8 +1,6 @@
 package dev.gigaherz.enderrift.client;
 
 import dev.gigaherz.enderrift.EnderRiftMod;
-import dev.gigaherz.enderrift.automation.browser.AbstractBrowserContainer;
-import dev.gigaherz.enderrift.network.SendSlotChanges;
 import dev.gigaherz.enderrift.rift.RiftRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -28,17 +26,4 @@ public class ClientHelper
         BlockEntityRenderers.register(EnderRiftMod.RIFT_BLOCK_ENTITY.get(), RiftRenderer::new);
     }
 
-    public static void handleSendSlotChanges(final SendSlotChanges message)
-    {
-        Minecraft minecraft = Minecraft.getInstance();
-        minecraft.execute(() ->
-        {
-            Player entityplayer = minecraft.player;
-
-            if (entityplayer != null && entityplayer.containerMenu != null && entityplayer.containerMenu.containerId == message.windowId)
-            {
-                ((AbstractBrowserContainer) entityplayer.containerMenu).slotsChanged(message.slotCount, message.indices, message.stacks);
-            }
-        });
-    }
 }

@@ -2,18 +2,6 @@ package dev.gigaherz.enderrift;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
-import dev.gigaherz.enderrift.automation.browser.*;
-import dev.gigaherz.enderrift.automation.driver.DriverBlock;
-import dev.gigaherz.enderrift.automation.driver.DriverBlockEntity;
-import dev.gigaherz.enderrift.automation.iface.InterfaceBlock;
-import dev.gigaherz.enderrift.automation.iface.InterfaceBlockEntity;
-import dev.gigaherz.enderrift.automation.iface.InterfaceContainer;
-import dev.gigaherz.enderrift.automation.iface.InterfaceScreen;
-import dev.gigaherz.enderrift.automation.proxy.ProxyBlock;
-import dev.gigaherz.enderrift.automation.proxy.ProxyBlockEntity;
-import dev.gigaherz.enderrift.network.ClearCraftingGrid;
-import dev.gigaherz.enderrift.network.SendSlotChanges;
-import dev.gigaherz.enderrift.network.SetVisibleSlots;
 import dev.gigaherz.enderrift.rift.*;
 import dev.gigaherz.enderrift.rift.storage.RiftHolder;
 import dev.gigaherz.enderrift.rift.storage.RiftInventory;
@@ -100,32 +88,14 @@ public class EnderRiftMod
     public static final RegistryObject<Block> RIFT = BLOCKS.register("rift", () -> new RiftBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).sound(SoundType.METAL).strength(3.0F, 8.0F).dynamicShape()));
     public static final RegistryObject<StructureCornerBlock> STRUCTURE_CORNER = BLOCKS.register("structure_corner", () -> new StructureCornerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).sound(SoundType.METAL).strength(3.0F, 8.0F).noLootTable()));
     public static final RegistryObject<StructureEdgeBlock> STRUCTURE_EDGE = BLOCKS.register("structure_edge", () -> new StructureEdgeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).sound(SoundType.METAL).strength(3.0F, 8.0F).noLootTable()));
-    public static final RegistryObject<Block> INTERFACE = BLOCKS.register("interface", () -> new InterfaceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).sound(SoundType.METAL).strength(3.0F, 8.0F)));
-    public static final RegistryObject<Block> BROWSER = BLOCKS.register("browser", () -> new BrowserBlock(false, BlockBehaviour.Properties.of().mapColor(MapColor.STONE).sound(SoundType.METAL).strength(3.0F, 8.0F)));
-    public static final RegistryObject<Block> CRAFTING_BROWSER = BLOCKS.register("crafting_browser", () -> new BrowserBlock(true, BlockBehaviour.Properties.of().mapColor(MapColor.STONE).sound(SoundType.METAL).strength(3.0F, 8.0F)));
-    public static final RegistryObject<Block> PROXY = BLOCKS.register("proxy", () -> new ProxyBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).sound(SoundType.METAL).strength(3.0F, 8.0F)));
-    public static final RegistryObject<Block> DRIVER = BLOCKS.register("driver", () -> new DriverBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).sound(SoundType.METAL).strength(3.0F, 8.0F)));
 
     public static final RegistryObject<Item> RIFT_ITEM = ITEMS.register("rift", () -> new BlockItem(RIFT.get(), new Item.Properties()));
     public static final RegistryObject<Item> STRUCTURE_CORNER_ITEM = ITEMS.register("structure_corner", () -> new BlockItem(STRUCTURE_CORNER.get(), new Item.Properties()));
     public static final RegistryObject<Item> STRUCTURE_EDGE_ITEM = ITEMS.register("structure_edge", () -> new BlockItem(STRUCTURE_EDGE.get(), new Item.Properties()));
-    public static final RegistryObject<Item> INTERFACE_ITEM = ITEMS.register("interface", () -> new BlockItem(INTERFACE.get(), new Item.Properties()));
-    public static final RegistryObject<Item> BROWSER_ITEM = ITEMS.register("browser", () -> new BlockItem(BROWSER.get(), new Item.Properties()));
-    public static final RegistryObject<Item> CRAFTING_BROWSER_ITEM = ITEMS.register("crafting_browser", () -> new BlockItem(CRAFTING_BROWSER.get(), new Item.Properties()));
-    public static final RegistryObject<Item> PROXY_ITEM = ITEMS.register("proxy", () -> new BlockItem(PROXY.get(), new Item.Properties()));
-    public static final RegistryObject<Item> DRIVER_ITEM = ITEMS.register("driver", () -> new BlockItem(DRIVER.get(), new Item.Properties()));
     public static final RegistryObject<Item> RIFT_ORB = ITEMS.register("rift_orb", () -> new RiftItem(new Item.Properties().stacksTo(16)));
 
     public static final RegistryObject<BlockEntityType<RiftBlockEntity>> RIFT_BLOCK_ENTITY = BLOCK_ENTITIES.register("rift", () -> BlockEntityType.Builder.of(RiftBlockEntity::new, RIFT.get()).build(null));
     public static final RegistryObject<BlockEntityType<StructureCornerBlockEntity>> STRUCTURE_CORNER_BLOCK_ENTITY = BLOCK_ENTITIES.register("structure", () -> BlockEntityType.Builder.of(StructureCornerBlockEntity::new, STRUCTURE_CORNER.get()).build(null));
-    public static final RegistryObject<BlockEntityType<InterfaceBlockEntity>> INTERFACE_BLOCK_ENTITY = BLOCK_ENTITIES.register("interface", () -> BlockEntityType.Builder.of(InterfaceBlockEntity::new, INTERFACE.get()).build(null));
-    public static final RegistryObject<BlockEntityType<BrowserBlockEntity>> BROWSER_BLOCK_ENTITY = BLOCK_ENTITIES.register("browser", () -> BlockEntityType.Builder.of(BrowserBlockEntity::new, BROWSER.get(), CRAFTING_BROWSER.get()).build(null));
-    public static final RegistryObject<BlockEntityType<ProxyBlockEntity>> PROXY_BLOCK_ENTITY = BLOCK_ENTITIES.register("proxy", () -> BlockEntityType.Builder.of(ProxyBlockEntity::new, PROXY.get()).build(null));
-    public static final RegistryObject<BlockEntityType<DriverBlockEntity>> DRIVER_BLOCK_ENTITY = BLOCK_ENTITIES.register("driver", () -> BlockEntityType.Builder.of(DriverBlockEntity::new, DRIVER.get()).build(null));
-
-    public static final RegistryObject<MenuType<BrowserContainer>> BROWSER_MENU = MENU_TYPES.register("browser", () -> new MenuType<>(BrowserContainer::new, FeatureFlags.DEFAULT_FLAGS));
-    public static final RegistryObject<MenuType<CraftingBrowserContainer>> CRAFTING_BROWSER_MENU = MENU_TYPES.register("crafting_browser", () -> new MenuType<>(CraftingBrowserContainer::new, FeatureFlags.DEFAULT_FLAGS));
-    public static final RegistryObject<MenuType<InterfaceContainer>> INTERFACE_MENU = MENU_TYPES.register("interface", () -> new MenuType<>(InterfaceContainer::new, FeatureFlags.DEFAULT_FLAGS));
 
     public static final RegistryObject<SimpleCraftingRecipeSerializer<OrbDuplicationRecipe>> ORB_DUPLICATION = RECIPE_SERIALIZERS.register("orb_duplication", () -> new SimpleCraftingRecipeSerializer<>(OrbDuplicationRecipe::new));
 
@@ -135,11 +105,6 @@ public class EnderRiftMod
                     .displayItems((featureFlags, output) -> {
                         output.accept(RIFT_ITEM.get());
                         output.accept(RIFT_ORB.get());
-                        output.accept(INTERFACE_ITEM.get());
-                        output.accept(BROWSER_ITEM.get());
-                        output.accept(CRAFTING_BROWSER_ITEM.get());
-                        output.accept(PROXY_ITEM.get());
-                        output.accept(DRIVER_ITEM.get());
                     }).build()
             );
 
@@ -165,7 +130,6 @@ public class EnderRiftMod
         CREATIVE_TABS.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::interComms);
         modEventBus.addListener(this::gatherData);
 
@@ -179,19 +143,9 @@ public class EnderRiftMod
     public void commonSetup(FMLCommonSetupEvent event)
     {
         int messageNumber = 0;
-        CHANNEL.messageBuilder(ClearCraftingGrid.class, messageNumber++, NetworkDirection.PLAY_TO_SERVER).encoder(ClearCraftingGrid::encode).decoder(ClearCraftingGrid::new).consumerNetworkThread(ClearCraftingGrid::handle).add();
-        CHANNEL.messageBuilder(SendSlotChanges.class, messageNumber++, NetworkDirection.PLAY_TO_CLIENT).encoder(SendSlotChanges::encode).decoder(SendSlotChanges::new).consumerNetworkThread(SendSlotChanges::handle).add();
-        CHANNEL.messageBuilder(SetVisibleSlots.class, messageNumber++, NetworkDirection.PLAY_TO_SERVER).encoder(SetVisibleSlots::encode).decoder(SetVisibleSlots::new).consumerNetworkThread(SetVisibleSlots::handle).add();
         logger.debug("Final message number: " + messageNumber);
 
         RiftStructure.init();
-    }
-
-    public void clientSetup(FMLClientSetupEvent event)
-    {
-        MenuScreens.register(INTERFACE_MENU.get(), InterfaceScreen::new);
-        MenuScreens.register(BROWSER_MENU.get(), BrowserScreen::new);
-        MenuScreens.register(CRAFTING_BROWSER_MENU.get(), CraftingBrowserScreen::new);
     }
 
     public void interComms(InterModEnqueueEvent event)
@@ -285,11 +239,6 @@ public class EnderRiftMod
                 @Override
                 protected void generate()
                 {
-                    this.dropSelf(DRIVER.get());
-                    this.dropSelf(PROXY.get());
-                    this.dropSelf(INTERFACE.get());
-                    this.dropSelf(BROWSER.get());
-                    this.dropSelf(CRAFTING_BROWSER.get());
                     this.dropSelf(RIFT.get());
                 }
 
@@ -318,11 +267,6 @@ public class EnderRiftMod
             protected void addTags(HolderLookup.Provider p_255662_)
             {
                 tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                        .add(BROWSER.get())
-                        .add(CRAFTING_BROWSER.get())
-                        .add(INTERFACE.get())
-                        .add(PROXY.get())
-                        .add(DRIVER.get())
                         .add(RIFT.get())
                         .add(STRUCTURE_CORNER.get())
                         .add(STRUCTURE_EDGE.get());
